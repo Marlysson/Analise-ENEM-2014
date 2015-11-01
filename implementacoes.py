@@ -3,17 +3,10 @@ import json
 
 class Escola(object):
 	
-	def subs(self,p):
-	    s = 'Sem informacao'
-	    if p == 'Sem informação':
-	        p = p.replace(p,s)
-	        return p
-
 	def get_campos(self,linha,separador=';'):
 		linha = linha.lower()
 		linha = linha.strip('\n\r')
 		linha = linha.split(separador)
-	
 		return linha
 
 	def to_json(self,arquivo):
