@@ -14,7 +14,7 @@ class Escola(object):
 		elif d.isdigit():
 			return int(d)
 		else:
-			return d
+			return unicode(d,encoding='utf-8',errors='replace')
 			
 	def get_campos(self,linha,separador=';'):
 		linha = linha.lower()
@@ -23,23 +23,23 @@ class Escola(object):
 		return linha
 
 	def to_json(self,arquivo):
-
-			dados = []
-			data = {}
-			campos = self.get_campos(arquivo.readline())
-
-			escolas = arquivo.readlines()
-
-			for escola in escolas:
-				escola = escola.strip('\r\n').split(';')
+		dados = []
+		data = {}
 			
-			   for campo,dado in zip(campos,escola):
-					data[campo] = self.formata(dado)
-				dados.append(data)
+		campos = self.get_campos(arquivo.readline())
 
-			return dados
+		escolas = arquivo.readlines()
 
+		for escola in escolas:
+			escola = escola.strip('\r\n').split(';')
+			
+			for campo,dado in zip(campos,escola):
+				data[campo] = self.formata(dado)
+			dados.append(data.copy())
+
+		return dados
 		
+
 	def compara_escolas(self,escola1,escola2):
 		pass
 
@@ -48,5 +48,6 @@ class Escola(object):
 
 arquivo = open('enem2014.csv')
 escola = Escola(arquivo)
+
 print escola.escolas
 
