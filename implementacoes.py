@@ -3,6 +3,19 @@ import json
 
 class Escola(object):
 	
+	def __init__(self,arquivo):
+		self.arquivo = arquivo
+		self.escolas = self.to_json(self.arquivo)
+		
+	def formata(self,d):
+		if ',' in d:
+			d = d.replace(',','.')
+			return float(d)
+		elif d.isdigit():
+			return int(d)
+		else:
+			return d
+			
 	def get_campos(self,linha,separador=';'):
 		linha = linha.lower()
 		linha = linha.strip('\n\r')
@@ -11,11 +24,8 @@ class Escola(object):
 
 	def to_json(self,arquivo):
 
-		with open(arquivo) as arquivo:
-
 			dados = []
 			data = {}
-
 			campos = self.get_campos(arquivo.readline())
 
 			escolas = arquivo.readlines()
@@ -23,27 +33,20 @@ class Escola(object):
 			for escola in escolas:
 				escola = escola.strip('\r\n').split(';')
 			
-				for campo,dado in zip(campos,escola):
-					data[campo] = dado	
+			   for campo,dado in zip(campos,escola):
+					data[campo] = self.formata(dado)
 				dados.append(data)
 
 			return dados
 
 		
-
 	def compara_escolas(self,escola1,escola2):
 		pass
 
 	def ranking(self,tipo):
 		pass
 
-
-# campos = [
-# 			'ranking','nome','municipio','UF','tipo',
-# 			'permanencia','socioeconomico','prova_objetiva',
-# 			'linguagens','matematica','natureza','humanas','redacao'
-# 		]
-
-escola = Escola()
-print escola.to_json('enem_2014.csv')
+arquivo = open('enem2014.csv')
+escola = Escola(arquivo)
+print escola.escolas
 
