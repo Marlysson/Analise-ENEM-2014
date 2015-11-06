@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding:utf-8 -*-
 
 def limpa_linha(linha):
 	linha = linha.strip("\r\n") 
@@ -12,7 +12,6 @@ def format_notas(d):
 		d = d.replace(',','.')
 		return float(d) #Retorna a string transformada em float
 	else:
-		# d = d.encode('cp1252').decode('utf-8')
 		return d #Retorna a própria string
 
 def get_campos(linha,separador=';'):
